@@ -2,11 +2,16 @@
 
 
 include __DIR__ . '/../managers/GestionStagiaire.php';
+include "../managers/GestionVille.php";
 
 
 
 
 $gestionStagiaire = new GestionStagiaire();
+
+
+
+
 
 
 if(isset($_GET['id'])){
@@ -19,8 +24,10 @@ if(isset($_POST['modifier'])){
     $id = $_POST['id'];
     $nom = $_POST['nom'];
     $cne = $_POST['cne'];
-    $gestionStagiaire->Modifier($id,$nom,$cne);
-    header('Location: lesStagiaire.php');
+    $ville = $_POST['ville'];
+
+    $gestionStagiaire->Modifier($id,$nom,$cne,$ville);
+    header('Location: ../index.php');
 }
 
 ?>
@@ -49,11 +56,42 @@ if(isset($_POST['modifier'])){
         value=<?php echo $stagiaire->getNom()?> >
     </div>
     <div>
-        <label for="cne">Description</label>
+        <label for="cne">Cne</label>
         <input type="text" required="required" 
         id="cne" name="cne" placeholder="cne"
         value=<?php echo htmlspecialchars(nl2br($stagiaire->getCne()), ENT_QUOTES); ?>>
     </div>
+
+
+    <div>
+			<label for="cne">ville</label>
+			<select name="ville" id="ville">
+				<?php
+                $gestionVille = new GestionVille();   
+                //-- BRING ALL CITIES --
+                $ville_names = $gestionVille->RechercherTous();   
+
+                // GET THE CITIE OF THE STAGIAIRE BYE VILLE_ID
+                $Selected_ville = $gestionVille->RechercherParId($stagiaire->getVille_id());
+                
+				?>
+				<option value="<?php echo $Selected_ville->getId() ?>"><?php echo $Selected_ville->getNom() ?></option>
+                
+				<?php
+                //-- DO A FOR LOOP ON ALL CITIES AND DISPLAYING THEM --
+				foreach ($ville_names as $ville) {
+					?>
+				  <option value="<?php echo $ville->getId() ?>"><?php echo $ville->getNom() ?></option>
+
+				<?php
+				}
+				?>
+			</select>
+		</div>
+
+
+
+
 
     <div>
         <input name="modifier" type="submit" value="Modifier">

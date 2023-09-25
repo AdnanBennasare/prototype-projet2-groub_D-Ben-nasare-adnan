@@ -1,14 +1,14 @@
 <?php
 
-
-include __DIR__ . '/managers/GestionVille.php';
-
+include "managers/GestionStagiaire.php";
+include "managers/GestionVille.php";
 
 
     // Trouver tous les employés depuis la base de données 
-    $gestionVille = new GestionVille();
-    $villes = $gestionVille->RechercherTous();
-    // print_r($projects);
+    $gestionStagiaire = new GestionStagiaire();
+    $stagiaires = $gestionStagiaire->RechercherTous();
+
+
 ?>
 
 
@@ -19,34 +19,40 @@ include __DIR__ . '/managers/GestionVille.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./UI/Styles/style.css">
-    <title>Gestion des villes</title>
+    <title>Gestion des stagiaires</title>
 </head>
 <body>
     <div>
-        <a href="UI/ajouterVille.php">Ajouter un villes</a>
+        <a href="UI/ajouterStagiaire.php">Ajouter un stagiaire</a>
         <table>
             <tr>
                 <th>Nom</th>
+                <th>Cne</th>
+                <th>ville</th>
                 <th>Actions</th>
             </tr>
             <?php
-                    foreach($villes as $ville){
+                    foreach($stagiaires as $stagiaire){
+                   
+                $gestionVille = new GestionVille();                  
+                $ville_names = $gestionVille->RechercherParId($stagiaire->getVille_id());
             ?>
 
             <tr>
-                <td><?= $ville->getNom() ?></td>
+                <td><?= $stagiaire->getNom() ?></td>
+                <td><?= $stagiaire->getCne() ?></td>
+            
+
+                <td><?= $ville_names->getNom() ?></td>
 
                 <td>
-                    <a href="UI/editerville.php?id=<?php echo $ville->getId() ?>">Éditer</a>
-                    <a href="UI/suprimerVille.php?id=<?php echo $ville->getId() ?>">Supprime</a>
-                    <a href="UI/ajouterStagiaire.php?ville_id=<?php echo $ville->getId() ?>">ajouter Stagiaire</a>
-
+                    <a href="UI/editerStagiaire.php?id=<?php echo $stagiaire->getId() ?>">Éditer</a>
+                    <a href="UI/supprimerStagiaire.php?id=<?php echo $stagiaire->getId() ?>">Supprime</a>
                 </td>
             </tr>
             <?php }?>
         </table>
-        <a href="UI/lesStagiaire.php">les stagiaires </a>
-
+     
     </div>
 </body>
 </html>

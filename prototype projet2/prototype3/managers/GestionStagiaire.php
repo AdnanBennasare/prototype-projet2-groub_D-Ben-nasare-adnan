@@ -45,11 +45,11 @@ class GestionStagiaire{
     }
 
 
-    public function Modifier($id,$nom,$cne)
+    public function Modifier($id,$nom,$cne,$ville_id)
     {
         // Requête SQL
         $sql = "UPDATE stagiaire SET 
-        nom='$nom', cne='$cne'
+        nom='$nom', cne='$cne', ville_id='$ville_id'
         WHERE id= $id";
 
         //  
