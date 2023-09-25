@@ -7,7 +7,7 @@ include __DIR__ . '/../Entities/ville.php';
 
 
  
-class GestionVille{
+class GestionVille {
 
     private $Connection = Null;
 
@@ -83,11 +83,13 @@ class GestionVille{
         $ville = new ville();
         $ville->setId($ville_data['id']);
         $ville->setNom($ville_data['nom']);
+      
         
         return $ville;
     }
-
-
+   
+    
+    
     
 }
 

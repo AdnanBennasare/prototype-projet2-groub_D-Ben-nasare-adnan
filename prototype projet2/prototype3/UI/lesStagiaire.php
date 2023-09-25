@@ -34,9 +34,8 @@ include "../managers/GestionVille.php";
             <?php
                     foreach($stagiaires as $stagiaire){
                    
-                $gestionVille = new GestionVille();       
+                $gestionVille = new GestionVille();                  
                 $ville_names = $gestionVille->RechercherParId($stagiaire->getVille_id());
-                // print_r($ville_names);
             ?>
 
             <tr>
