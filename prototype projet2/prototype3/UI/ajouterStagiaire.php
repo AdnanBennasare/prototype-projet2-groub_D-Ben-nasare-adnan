@@ -10,6 +10,7 @@ if (!empty($_POST)) {
 	$stagiaire = new Stagiaire();
 	$stagiaire->setNom($_POST['nom']);
 	$stagiaire->setCne($_POST['cne']);
+	$stagiaire->setType($_POST['type']);
 	$stagiaire->setVille_id($_POST['ville']);
 
 	$gestionStagiaire->Ajouter($stagiaire);
@@ -47,6 +48,13 @@ $ville_names = $gestionVille->RechercherTous();
 		<div>
 			<label for="cne">cne</label>
 			<input type="text" required="required" id="cne" name="cne" placeholder="cne">
+		</div>
+		<div>
+			<label for="type">type</label>
+			<select name="type" id="type">
+				<option value="stagiaire">stagiaire</option>
+				<option value="Person">Person</option>
+			</select>
 		</div>
 		<div>
 			<label for="cne">ville</label>
