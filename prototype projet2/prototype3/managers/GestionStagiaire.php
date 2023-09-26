@@ -30,11 +30,12 @@ class GestionStagiaire{
 
         $nom = $stagiaire->getNom();
         $cne = $stagiaire->getCne();
+        $type = $stagiaire->getType();
         $ville_id = $stagiaire->getVille_id();
 
         // requête SQL
-        $sql = "INSERT INTO stagiaire(nom, cne, ville_id)
-                                VALUES('$nom', '$cne', '$ville_id')";
+        $sql = "INSERT INTO stagiaire(nom, cne, type, ville_id)
+                                VALUES('$nom', '$cne', '$type', '$ville_id')";
         mysqli_query($this->getConnection(), $sql);
         
     }
@@ -45,11 +46,11 @@ class GestionStagiaire{
     }
 
 
-    public function Modifier($id,$nom,$cne,$ville_id)
+    public function Modifier($id,$nom,$cne,$type,$ville_id)
     {
         // Requête SQL
         $sql = "UPDATE stagiaire SET 
-        nom='$nom', cne='$cne', ville_id='$ville_id'
+        nom='$nom', cne='$cne', type='$type', ville_id='$ville_id'
         WHERE id= $id";
 
         //  
@@ -64,7 +65,7 @@ class GestionStagiaire{
 
     
     public function RechercherTous(){
-        $sql = 'SELECT id, nom, cne, ville_id FROM stagiaire';
+        $sql = 'SELECT id, nom, cne, type, ville_id FROM stagiaire';
         $query = mysqli_query($this->getConnection() ,$sql);
         $stagiaires_data = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
@@ -74,7 +75,9 @@ class GestionStagiaire{
             $stagiaire->setId($stagiaire_data['id']);
             $stagiaire->setNom($stagiaire_data['nom']);
             $stagiaire->setCne($stagiaire_data['cne']);
+            $stagiaire->setType($stagiaire_data['type']);
             $stagiaire->setVille_id($stagiaire_data['ville_id']);
+
 
             array_push($stagiaires, $stagiaire);
         }
@@ -90,12 +93,34 @@ class GestionStagiaire{
         $stagiaire->setId($stagiaire_data['id']);
         $stagiaire->setNom($stagiaire_data['nom']);
         $stagiaire->setCne($stagiaire_data['cne']);
+        $stagiaire->setType($stagiaire_data['type']);
         $stagiaire->setVille_id($stagiaire_data['ville_id']);
         
         return $stagiaire;
     }
 
-
+    public function CountPeopleByVille() {
+        $sql = 'SELECT ville_id, COUNT(*) as count_people
+                FROM stagiaire
+                WHERE type = "Person"
+                GROUP BY ville_id';
+        $query = mysqli_query($this->getConnection(), $sql);
+        $data = mysqli_fetch_all($query, MYSQLI_ASSOC);
+    
+        return $data;
+    }
+    
+    public function CountStagiaireByVille() {
+        $sql = 'SELECT v.nom AS city_name, COUNT(*) AS count_stagiaire
+                FROM stagiaire s
+                JOIN ville v ON s.ville_id = v.id
+                WHERE s.type = "stagiaire"
+                GROUP BY s.ville_id';
+        $query = mysqli_query($this->getConnection(), $sql);
+        $data = mysqli_fetch_all($query, MYSQLI_ASSOC);
+    
+        return $data;
+    }
     
 }
 

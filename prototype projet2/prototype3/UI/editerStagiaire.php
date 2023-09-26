@@ -24,9 +24,10 @@ if(isset($_POST['modifier'])){
     $id = $_POST['id'];
     $nom = $_POST['nom'];
     $cne = $_POST['cne'];
+    $type = $_POST['type'];
     $ville = $_POST['ville'];
 
-    $gestionStagiaire->Modifier($id,$nom,$cne,$ville);
+    $gestionStagiaire->Modifier($id,$nom,$cne,$type,$ville);
     header('Location: ../index.php');
 }
 
@@ -61,6 +62,21 @@ if(isset($_POST['modifier'])){
         id="cne" name="cne" placeholder="cne"
         value=<?php echo htmlspecialchars(nl2br($stagiaire->getCne()), ENT_QUOTES); ?>>
     </div>
+
+
+    <div>
+			<label for="type">type</label>
+            <select name="type" id="type">
+            <option value="<?php echo $stagiaire->getType() ?>"><?php echo $stagiaire->getType() ?></option>
+            <?php if ($stagiaire->getType() !== "stagiaire"): ?>
+                <option value="stagiaire">stagiaire</option>
+            <?php endif; ?>
+            <?php if ($stagiaire->getType() !== "Person"): ?>
+                <option value="Person">person</option>
+            <?php endif; ?>
+            </select>
+	
+	</div>
 
 
     <div>

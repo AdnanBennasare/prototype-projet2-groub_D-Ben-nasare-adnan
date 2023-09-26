@@ -26,40 +26,7 @@ class GestionVille {
         
     }
 
-    public function Ajouter($ville){
 
-        $nom = $ville->getNom();
-        // requête SQL
-        $sql = "INSERT INTO ville(nom) 
-                                VALUES('$nom')";
-        mysqli_query($this->getConnection(), $sql);
-        
-    }
-
-    public function Supprimer($id){
-        $sql = "DELETE FROM ville WHERE id= '$id'";
-        mysqli_query($this->getConnection(), $sql);
-    }
-
-
-    public function Modifier($id,$nom)
-    {
-        // Requête SQL
-        $sql = "UPDATE ville SET 
-        nom='$nom'
-        WHERE id= $id";
-
-        //  
-        mysqli_query($this->getConnection(), $sql);
-
-        //
-        if(mysqli_error($this->getConnection())){
-            $msg =  'Erreur' . mysqli_errno($this->getConnection());
-            throw new Exception($msg); 
-        } 
-    }
-
-    
     public function RechercherTous(){
         $sql = 'SELECT id, nom FROM ville';
         $query = mysqli_query($this->getConnection() ,$sql);

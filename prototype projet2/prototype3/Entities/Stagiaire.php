@@ -5,6 +5,7 @@ class Stagiaire{
     private $id;
     private $nom;
     private $cne;
+    private $type;
     private $ville_id;
 
 
@@ -32,6 +33,13 @@ class Stagiaire{
     }
     public function setCne($CNE) {
         $this->cne = $CNE;
+    }
+
+    public function getType() {
+        return $this->type;
+    }
+    public function setType($TYPE) {
+        $this->type = $TYPE;
     }
 
     public function getVille_id() {
